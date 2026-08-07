@@ -17,7 +17,16 @@ function toggleplay() {
 
 function updateButton() {
 	toggle.textContent = video.paused ? ">" : "| |";
-} 
+}
+
+function skip() {
+	video.currentTime += parseFloat(this.dataset.skip);
+}
+
+function handleRangeUpdate() {
+	video[this.name] = this.value;
+}
+
 function handleprogress() {
 	const percent = (video.currentTime / video.duration) * 100;
 	progressFilled.style.flexBasis = `${percent}%`;
@@ -28,35 +37,22 @@ function scrub(e) {
 	video.currentTime = scrubTime;
 }
 
-function handleRangeUpdate() {
-	video[this.name] = this.value;
-}
-
-function skip() {
-	video.currentTime += parseFloat(this.dataset.skip);
-}
-
 video.addEventListener("click", toggleplay);
 video.addEventListener("play", updateButton);
 video.addEventListener("pause", updateButton);
-video.addEventListener("timeupdate", handleprogress);
 
 toggle.addEventListener("click", toggleplay);
 
-ranges.forEach(range =>
-	range.addEventListener("input", handleRangeUpdate)
+video.addEventListener("timeupdate", handleRangeUpdate)
+
+sliders.forEach(slider =>
+	slider.addEventListener("input", handleRangeUpdate)
 );
 
 skipButtons.forEach(button =>
 	button.addEventListener("click", skip)
 );	
 
-let mousedown = false;
-
 progress.addEventListener("click", scrub);
-progress.addEventListener("mousemove", (e) => {
-	if (mousedown) scrub(e);
-});
 
-progress.addEventListener("mousedown", () => (mousedown = true));
-progress.addEventListener("mouseup", () => (mousedown = false));   
+
