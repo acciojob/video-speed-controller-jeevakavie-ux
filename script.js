@@ -1,9 +1,9 @@
 const player = document.querySelector(".player");
 const video = player.querySelector(".viewer");
 const progress = player.querySelector(".progress");
-const progressFilled = player.querySelector(".progress_filled");
+const progressFilled = player.querySelector(".progress__filled");
 const toggle = player.querySelector(".toggle");
-const ranges = player.querySelectorA11(".player_slider");
+const ranges = player.querySelectorA11(".player__slider");
 const skipButtons = player.querySelectorA11("[data-skip]");
 
 
@@ -16,7 +16,7 @@ function toggleplay() {
 }
 
 function updateButton() {
-	toggle.textContent = video.paused ? ">" : "| |";
+	toggle.textContent = video.paused ? "►" : "❚ ❚";  
 }
 
 function skip() {
